@@ -9,9 +9,14 @@ import Viewer
 import Controller
 
 class Controller():
+
+    # Contructor
+
     def __init__(self):
         self.model = Model
         self.viewer = Viewer
+
+    # Public methods
 
     # def create_task(self, name, task_type, date, start_time, duration):
     #   try:
@@ -22,3 +27,5 @@ class Controller():
     # def show_tasks(self):
         # for task in self.scheduler.tasks:
         #     self.view.display_task(task)
+
+    # Private methods

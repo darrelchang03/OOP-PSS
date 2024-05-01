@@ -7,7 +7,15 @@ Parameters:
     float duration (same format as startTime)
 '''
 
+import Model
+import Task
+import Viewer
+import Controller
+
 class Task():
+
+# Parent Class Task Constructor
+
     def __init__(self, name, type, startTime, duration):
         self.name = name
         self.type = type

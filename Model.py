@@ -11,9 +11,14 @@ import Controller
 
 from datetime import datetime, timedelta
 class Model():
+
+# Contructor
+
     def __init__(self):
         # List of task objects
         self.tasks = []
+
+# Public Methods
 
     def add_task(self, task):
         for existing_task in self.tasks:
@@ -21,7 +26,8 @@ class Model():
                 raise ValueError('Task overlap with an existing task')
         self.tasks.append(task)
 
-    def create_datetime(self, date, time):
+# Private methods
+    def __create_datetime(self, date, time):
         year = int(date / 10000)
         month = int(date / 100 % 100)
         day = int(date % 100)
@@ -30,7 +36,7 @@ class Model():
         
         return datetime(year, month, day, hours, minutes)
 
-    def tasks_overlap(self, task1, task2):
+    def __tasks_overlap(self, task1, task2):
         start1 = self.create_datetime(task1['date'], task1['start_time'])
         end1 = start1 + timedelta(hours=task1['duration'])
 
