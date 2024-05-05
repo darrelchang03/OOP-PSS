@@ -22,12 +22,44 @@ class Model():
 
     def add_task(self, task):
         for existing_task in self.tasks:
-            if self.tasks_overlap(task, existing_task):
-                raise ValueError('Task overlap with an existing task')
+            if self.__tasks_overlap(task, existing_task):
+                raise ValueError('Task overlaps with an existing task')
         self.tasks.append(task)
 
+    # def add_anti_task(self, task):
+    #     for existing_task in self.tasks:
+            
+
+    def delete_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task)
+        else:
+            raise ValueError('Task does not exist')
+
+    # For editing task
+    # 1. Make sure taks exists (check if there is a task of that name)
+    # 2. Ask what they want to change about the task
+    # 3. Check if change creates conflicts (eg. not valid task type for that task class) or conflicts with other tasks (eg. overlap of datetime or name)
+
+    # Check if a task exists by name. Returns task if it does, False otherwise
+    def task_exists_by_name(self, taskName):
+        for existing_task in self.tasks:
+            if taskName == existing_task.name:
+                return existing_task
+        return False
+    
+    # Updates a tasks name. If the new name exists return False. True if change is successful
+    def update_task_name(self, newTaskName):
+        task = self.task_exists_by_name(newTaskName)
+        if task:
+            return False
+        else:
+            task.name = newTaskName
+            return True
+        
+# YYYY MM DD
 # Private methods
-    def __create_datetime(self, date, time):
+    def create_datetime(self, date, time):
         year = int(date / 10000)
         month = int(date / 100 % 100)
         day = int(date % 100)
@@ -35,6 +67,9 @@ class Model():
         minutes = (int(time - hours) * 60)
         
         return datetime(year, month, day, hours, minutes)
+    
+    def __tasks_completely_overlap(self, task1, task2):
+        start1 = self.__create_datetime(task1[''])
 
     def __tasks_overlap(self, task1, task2):
         start1 = self.create_datetime(task1['date'], task1['start_time'])
