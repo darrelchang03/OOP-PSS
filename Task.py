@@ -21,7 +21,8 @@ class Task():
         self.name = name
         self.type = type
         self.startDatetime = self.__create_datetime(date, startTime)
-        self.endDatetime = self.startDatetime + self.__create_timedelta(duration)
+        self.duration = self.__create_datetime(duration)
+        self.endDatetime = self.startDatetime + self.duration
     
     def __create_datetime(self, date, time):
         year = int(date / 10000)

@@ -8,8 +8,11 @@ import Model
 import Task
 import Viewer
 import Controller
+import json
 
 from datetime import datetime, timedelta
+from Task import *
+
 class Model():
 
 # Contructor
@@ -17,17 +20,52 @@ class Model():
     def __init__(self):
         # List of task objects
         self.tasks = []
+       
 
 # Public Methods
 
     def add_task(self, task):
+        #checks if the existing task is a recurring task 
         for existing_task in self.tasks:
-            if self.__tasks_overlap(task, existing_task):
+            if (isinstance(task, RecurringTask)):
+
+                #checks the occurences and sees if the tasks overlap
+                for occurence in existing_task.occurences(datetime.today(), existing_task.endDatetime):
+
+                    #if tasks the anti_tasks overlap with the tasks, we can add tasks
+                    if self.__tasks_overlap(existing_task, task):
+
+                        for task in self.tasks:
+                            if self.__tasks_completely_overlap(task, existing_task) and isinstance(task, AntiTask):
+                                self.tasks.append(task)
+                                return
+                            else:
+                                continue
+                        else:
+                            raise ValueError("No anti task that match")
+
+            elif self.__tasks_overlap(task, existing_task): 
+        
                 raise ValueError('Task overlaps with an existing task')
-        self.tasks.append(task)
+            
+        else:
+            self.tasks.append(task)
 
     # def add_anti_task(self, task):
-    #     for existing_task in self.tasks:
+
+    def add_anti_task(self, anti_task):
+       #checks if task is a recurring task and if task is the same duration has anti task
+        if isinstance(anti_task, AntiTask):
+            for task in self.tasks:
+                if (isinstance(task, RecurringTask) and task.duration == anti_task.duration):
+                    for occurence in task.occurences(datetime.today(), task.endDatetime):
+                        if occurence == anti_task.startDateTime:
+                            self.tasks.append(anti_task)
+                        else:
+                            raise ValueError('No recurring task found for anti-task')
+        else: 
+           raise TypeError("Task is not anti task")
+
             
 
     def delete_task(self, task):
@@ -57,6 +95,21 @@ class Model():
             task.name = newTaskName
             return True
         
+    #   def importJson(self, jsonFile) (WIP):
+
+
+
+    # def exportJson(self, skipKeys = True):
+        #trying to open file and append the tasks to the file (WIP)
+        '''
+        try: 
+            with open("schedule.json", "w") as outfile:
+                for task in self.tasks:
+                    json.dump(task__dict__, outfile)   
+                json.dump(dictionary, outfile)
+                '''
+
+
 # YYYY MM DD
 # Private methods
     def create_datetime(self, date, time):
