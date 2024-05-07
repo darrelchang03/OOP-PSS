@@ -24,10 +24,14 @@ class Controller():
             self.viewer.display_message("Task added successfully.")
         except ValueError as e:
            self.viewer.display_error(str(e))
-
-    def show_tasks(self):
-        for task in self.scheduler.tasks:
-            self.viewer.display_task(task)
+    
+    def create_anti_task(self, task):
+        try:
+            new_anti_task = Task.AntiTask(self, task)
+            self.model.add_anti_task(new_anti_task)
+            self.viewer.display_message("AntiTask added successfully.")
+        except ValueError as e:
+           self.viewer.display_error(str(e))
 
     def remove_task(self, task):
         try:
@@ -42,5 +46,9 @@ class Controller():
             self.viewer.display_message(f"Task name {taskName} updated successfully")
         except ValueError as e:
            self.viewer.display_error(str(e))
+
+    def show_tasks(self):
+        for task in self.scheduler.tasks:
+            self.viewer.display_task(task)
 
     # Private methods
