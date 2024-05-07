@@ -36,4 +36,11 @@ class Controller():
         except ValueError as e:
             self.viewer.diplay_error(str(e))
 
+    def update_name(self, taskName):
+        try:
+            self.model.update_task_name(taskName)
+            self.viewer.display_message(f"Task name {taskName} updated successfully")
+        except ValueError as e:
+           self.viewer.display_error(str(e))
+
     # Private methods
