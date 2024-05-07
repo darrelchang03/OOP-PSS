@@ -66,7 +66,7 @@ class Model():
         else: 
            raise TypeError("Task is not anti task")
 
-            
+
 
     def delete_task(self, task):
         if task in self.tasks:

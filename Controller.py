@@ -6,7 +6,6 @@ Retrieves data from the model to update the view.
 import Model
 import Task
 import Viewer
-import Controller
 
 class Controller():
 
@@ -18,9 +17,9 @@ class Controller():
 
     # Public methods
 
-    def create_task(self, name, task_type, date, start_time, duration):
+    def create_task(self, name, task_type, start_time, duration, date):
         try:
-            new_task = Task(name, task_type, date, start_time, duration)
+            new_task = Task(name, task_type, start_time, duration, date)
             self.model.add_task(new_task)
             self.viewer.display_message("Task added successfully.")
         except ValueError as e:
@@ -29,5 +28,12 @@ class Controller():
     def show_tasks(self):
         for task in self.scheduler.tasks:
             self.viewer.display_task(task)
+
+    def remove_task(self, task):
+        try:
+            self.model.delete_task(task)
+            self.viewer.display_message("Task deleted successfully")
+        except ValueError as e:
+            self.viewer.diplay_error(str(e))
 
     # Private methods
