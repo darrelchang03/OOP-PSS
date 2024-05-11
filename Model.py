@@ -87,12 +87,16 @@ class Model():
         return False
     
     # Updates a tasks name. If the new name exists return False. True if change is successful
-    def update_task_name(self, newTaskName):
-        task = self.task_exists_by_name(newTaskName)
-        if task:
+    def update_task_name(self, currentTaskName , newTaskName):
+        newTask = self.task_exists_by_name(newTaskName)
+        currentTask = self.task_exists_by_name(currentTaskName)
+        # If task by the new name already exists return false, or there is currentTask does not exist
+        if (newTask or not currentTask):
             return False
+        
+        # We can change the current task to 
         else:
-            task.name = newTaskName
+            currentTask.name = newTaskName
             return True
         
     #   def importJson(self, jsonFile) (WIP):
