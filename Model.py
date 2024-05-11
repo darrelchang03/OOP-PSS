@@ -53,19 +53,21 @@ class Model():
 
     # def add_anti_task(self, task):
 
+    # Returns true if anti_task is added, and specific errors if the anti-task cannot be added
     def add_anti_task(self, anti_task):
-       #checks if task is a recurring task and if task is the same duration has anti task
+       #checks if task is a recurring task and if task is the same duration as anti task
         if isinstance(anti_task, AntiTask):
             for task in self.tasks:
                 if (isinstance(task, RecurringTask) and task.duration == anti_task.duration):
                     for occurence in task.occurences(datetime.today(), task.endDatetime):
                         if occurence == anti_task.startDateTime:
                             self.tasks.append(anti_task)
-                        else:
-                            raise ValueError('No recurring task found for anti-task')
+                            return True
+            # Went through all the tasks and there was no matching time for recurring tasks
+            else:
+                raise ValueError('No recurring task found for anti-task')
         else: 
            raise TypeError("Task is not anti task")
-
 
 
     def delete_task(self, task):
@@ -98,6 +100,25 @@ class Model():
         else:
             currentTask.name = newTaskName
             return True
+
+    # Return a list of tasks for the next n days
+    # Prompt user with How far in advance would you like to view your schedule
+    def tasksForNextDays(self, days):
+        res = []
+        today = datetime.today()
+        endDate = today + datetime.day(days)
+        for task in self.tasks:
+            if isinstance(task, RecurringTask):
+                for occurence in task.occurences(datetime.today(), task.endDatetime):
+                    if today <= occurence <= endDate:
+                        occurenceName = 'Occurance of ' + task.name
+                        singleOccurence = Task(occurenceName, task.type, )
+                        res.append(singleOccurence)
+            elif (today <= task.startDatetime.today() <= endDate):
+                res.append(task)
+        return task
+
+            
         
     #   def importJson(self, jsonFile) (WIP):
 
@@ -126,13 +147,13 @@ class Model():
         return datetime(year, month, day, hours, minutes)
     
     def __tasks_completely_overlap(self, task1, task2):
-        start1 = self.__create_datetime(task1[''])
+        return (task1.startDatetime == task2.startDatetime and task2.duration == task2.duration)
 
     def __tasks_overlap(self, task1, task2):
-        start1 = self.create_datetime(task1['date'], task1['start_time'])
-        end1 = start1 + timedelta(hours=task1['duration'])
+        start1 = task1.startDatetime
+        end1 = start1 + task1.duration
 
-        start2 = self.create_datetime(task2['date'], task2['start_time'])
-        end2 = start2 + timedelta(hours=task2['duration'])
+        start2 = task2.startDatetime
+        end2 = start2 + task2.duration
 
         return max(start1, start2) < min(end1, end2)

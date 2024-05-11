@@ -13,9 +13,8 @@ import Viewer
 import Controller
 from datetime import datetime, timedelta
 
-class Task():
-
 # Parent Class Task Constructor
+class Task():
 
     def __init__(self, name, type, startTime, duration, date):
         self.name = name
