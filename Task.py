@@ -16,12 +16,23 @@ from datetime import datetime, timedelta
 # Parent Class Task Constructor
 class Task():
 
+     def __init__(self, name, type, startTime, duration, date):
+        self.name = name
+        self.type = type
+        self.start_time = startTime
+        self.duration = duration
+        self.date = date
+        self.startDateTime = self.__create_datetime(date, startTime)
+        self.end_datetime = self.startDateTime + self.__create_timedelta(duration)
+
+    '''
     def __init__(self, name, type, startTime, duration, date):
         self.name = name
         self.type = type
         self.startDatetime = self.__create_datetime(date, startTime)
         self.duration = self.__create_datetime(duration)
         self.endDatetime = self.startDatetime + self.duration
+    '''
     
     def __create_datetime(self, date, time):
         year = int(date / 10000)
