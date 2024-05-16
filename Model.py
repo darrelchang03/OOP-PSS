@@ -146,19 +146,21 @@ class Model():
 
 
 
-    # def exportJson(self, skipKeys = True):
+    def exportJson(self):
         #trying to open file and append the tasks to the file (WIP)
-        '''
         try: 
             with open("schedule.json", "w") as outfile:
                 for task in self.tasks:
-                    json.dump(task__dict__, outfile)   
-                json.dump(dictionary, outfile)
-        '''
+                    json.dumps(task.__dict__, outfile, skipkeys= True, indent=4)
+        except:
+            print("Error")
+        
 
 
 # YYYY MM DD
 # Private methods
+
+        
     def create_datetime(self, date, time):
         year = int(date / 10000)
         month = int(date / 100 % 100)

@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 # Parent Class Task Constructor
 class Task():
 
-     def __init__(self, name, type, startTime, duration, date):
+    def __init__(self, name, type, startTime, duration, date):
         self.name = name
         self.type = type
         self.start_time = startTime
@@ -48,6 +48,7 @@ class Task():
         hours = int(duration)
         minutes = (int(duration-hours) * 60)
         return timedelta(hours=hours, minutes=minutes)
+    
 '''
 Parameters:
     Same as Task (taskType = ['Visit', 'Shopping', 'Appointment'])
