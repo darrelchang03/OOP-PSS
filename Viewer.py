@@ -12,7 +12,7 @@ import Controller
 class Viewer():
 
     # Contructor
-    '''
+
     def display_error(self, message):
         print("Error:", message)
     
@@ -21,7 +21,7 @@ class Viewer():
     
     # Other public Methods: Display day, display week, display month
         
-
+    '''
     month = 1
     week = 1
     day = 1
@@ -50,9 +50,6 @@ class Viewer():
     def update_day(newDay):
         day = newDay
     '''
-
-    def __init__(self, model):
-        self.model = model
 
 # Added task as parameter. A list of tasks will be given by the controller to display
     def display_tasks(self, tasks):
