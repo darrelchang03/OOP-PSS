@@ -80,11 +80,8 @@ class Viewer():
         #     print(f"Error adding task: {e}")
         print("Creating new task")
      
-        self.prompt_task_details()
+        return self.prompt_task_details()
 
-
-        # return values
-        return name, type, time, duration, date
     
 	
 
