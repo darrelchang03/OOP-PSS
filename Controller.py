@@ -19,37 +19,71 @@ class Controller():
     # Public methods
 
 # 
-    def create_task(self, name, task_type, start_time, duration, date):
-        # call viewer to prompt for task
-        # get values returned and validate
-        # Validate using model methods
-        # If valid create Task and add it to the model
+    def call_menu(self):
         try:
-            new_task = Task(name, task_type, start_time, duration, date)
+            output = self.viewer.menu()
+            x = True
+            while (x):
+                if output == '1':
+                    self.show_tasks()
+                    x = False
+                elif output == '2':
+                    self.create_task()
+                    x = False
+                elif output == '3':
+                    self.remove_task()
+                    x = False
+                elif output == '4':
+                    self.viewer.display_message("Exiting")
+                    x = False
+                else:
+                    self.viewer.display_message("Invalid choice. Please try again.")
+                    output = self.viewer.menu()
+
+        except ValueError as e:
+           self.viewer.display_error(str(e))
+# 
+    def create_task(self):
+        try:
+            # call viewer to prompt for task
+            self.viewer.display_message("Enter your task details:")
+            details = self.viewer.prompt_task_details()
+            new_task = Task(details)
+
+            # Validate using model methods - no model function exists
+            # If valid create Task and add it to the model
             self.model.add_task(new_task)
             self.viewer.display_message("Task added successfully.")
         except ValueError as e:
            self.viewer.display_error(str(e))
     
-    def create_anti_task(self, task):
-        # call viewer to prompt for task
-        # get values returned and validate
-        # Validate using model methods
-        # If valid create Task and add it to the model
+    def create_anti_task(self):
         try:
-            new_anti_task = Task.AntiTask(self, task)
+            # call viewer to prompt for task
+            self.viewer.display_message("Enter your task details:")
+            details = self.viewer.prompt_task_details()
+            new_task = Task(details)
+
+            # Validate using model methods
+            # If valid create Task and add it to the model
+            new_anti_task = Task.AntiTask(self, new_task)
             self.model.add_anti_task(new_anti_task)
             self.viewer.display_message("AntiTask added successfully.")
         except ValueError as e:
            self.viewer.display_error(str(e))
 
-    def remove_task(self, task):
+    def remove_task(self):
         # call viewer to prompt for task
         # get values returned and validate
         # Validate using model methods
         # If valid delete using the model methods
         try:
-            self.model.delete_task(task)
+            name = self.viewer.prompt_delete_task("Enter your task name:")
+            task = self.model.task_exists_by_name(name)
+            if(task != False):
+                self.model.delete_task(task)
+            else:
+                self.viewer.display_message("Task does not exist.")
             self.viewer.display_message("Task deleted successfully")
         except ValueError as e:
             self.viewer.diplay_error(str(e))
