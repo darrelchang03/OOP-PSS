@@ -78,8 +78,8 @@ class Viewer():
         #     print("Task added successfully.")
         # except ValueError as e:
         #     print(f"Error adding task: {e}")
+        print("Creating new task")
         self.prompt_task_details()
-        # prompt for other task values
 
 
         # return values
@@ -88,6 +88,7 @@ class Viewer():
         # This method should just be prompting the user. And then return the user's inputs
         # it doesnt need to call the model, thats the Controllers job.
         name = input("Enter the name of the task to delete: ")
+        return name
         # task = self.model.task_exists_by_name(name)
         # if task:
         #     try:
@@ -105,6 +106,10 @@ class Viewer():
         duration = float(input("Enter duration: "))
         date = int(input("Enter date (YYYYMMDD): "))
         return name, task_type, start_time, duration, date
+    
+    def prompt_view_schedule(self):
+        days = input("How many days in advance would you like to view your schedule")
+        return days
 
     def menu(self):
         while True:
