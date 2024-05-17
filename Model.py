@@ -106,7 +106,7 @@ class Model():
     def tasksForNextDays(self, days):
         res = []
         today = datetime.today()
-        endDate = today + datetime.day(days)
+        endDate = today + timedelta(days=days)
         for task in self.tasks:
             if isinstance(task, RecurringTask):
                 for occurence in task.occurences(datetime.today(), task.endDatetime):
@@ -116,27 +116,51 @@ class Model():
                         res.append(singleOccurence)
             elif (today <= task.startDatetime.today() <= endDate):
                 res.append(task)
-        return task
+        return res
 
             
         
-    #   def importJson(self, jsonFile) (WIP):
+    def importJson(self, jsonFile):
+         
+        try:
+            #input a file name to import
+            filename = input("Enter the filename to import tasks from: ")
+            with open(filename, "r") as infile:
+                data = json.load(infile)
+                for task_data in data:
+                    # adds task from the file
+                    
+                    res = self.add_task(task_data)
+                    if res is False:
+                        print(f"Conflict detected while importing task '{task_data['Name']}'")
+                    elif isinstance(res, Exception):
+                        print(f"Error importing task '{task_data['Name']}': {res}")
+
+            print("Tasks imported successfully from ", filename)
+
+        except FileNotFoundError: 
+            print(f"File {filename} not found")
+
+        except Exception as e:
+            print("Error importing tasks: ", e) 
 
 
 
-    # def exportJson(self, skipKeys = True):
+    def exportJson(self):
         #trying to open file and append the tasks to the file (WIP)
-        '''
         try: 
             with open("schedule.json", "w") as outfile:
                 for task in self.tasks:
-                    json.dump(task__dict__, outfile)   
-                json.dump(dictionary, outfile)
-                '''
+                    json.dumps(task.__dict__, outfile, skipkeys= True, indent=4)
+        except:
+            print("Error")
+        
 
 
 # YYYY MM DD
 # Private methods
+
+        
     def create_datetime(self, date, time):
         year = int(date / 10000)
         month = int(date / 100 % 100)

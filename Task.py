@@ -19,9 +19,20 @@ class Task():
     def __init__(self, name, type, startTime, duration, date):
         self.name = name
         self.type = type
+        self.start_time = startTime
+        self.duration = duration
+        self.date = date
+        self.startDateTime = self.__create_datetime(date, startTime)
+        self.end_datetime = self.startDateTime + self.__create_timedelta(duration)
+
+    '''
+    def __init__(self, name, type, startTime, duration, date):
+        self.name = name
+        self.type = type
         self.startDatetime = self.__create_datetime(date, startTime)
         self.duration = self.__create_timedelta(duration)
         self.endDatetime = self.startDatetime + self.duration
+    '''
     
     def __create_datetime(self, date, time):
         year = int(date / 10000)
@@ -37,6 +48,7 @@ class Task():
         hours = int(duration)
         minutes = ((duration-hours) * 60)
         return timedelta(hours=hours, minutes=minutes)
+    
 '''
 Parameters:
     Same as Task (taskType = ['Visit', 'Shopping', 'Appointment'])
