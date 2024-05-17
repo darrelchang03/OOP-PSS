@@ -54,8 +54,8 @@ class Viewer():
     def __init__(self, model):
         self.model = model
 
-    def display_tasks(self):
-        tasks = self.model.tasks
+# Added task as parameter. A list of tasks will be given by the controller to display
+    def display_tasks(self, tasks):
         if not tasks:
             print("\nNo tasks scheduled.")
             return
@@ -67,26 +67,36 @@ class Viewer():
             print("Duration:", task.duration, "hours")
             print("")
 
-    def add_task(self):
-        name, task_type, start_time, duration, date = self.prompt_task_details()
-        task = Task.TransientTask(name, task_type, start_time, duration, date)
-        try:
-            self.model.add_task(task)
-            print("Task added successfully.")
-        except ValueError as e:
-            print(f"Error adding task: {e}")
+    def prompt_add_task(self):
+        # This method should just be prompting the user. And then return the user's inputs
+        # it doesnt need to call the model, thats the Controllers job.
 
-    def delete_task(self):
+        # name, task_type, start_time, duration, date = self.prompt_task_details()
+        # task = Task.TransientTask(name, task_type, start_time, duration, date)
+        # try:
+        #     self.model.add_task(task)
+        #     print("Task added successfully.")
+        # except ValueError as e:
+        #     print(f"Error adding task: {e}")
+        self.prompt_task_details()
+        # prompt for other task values
+
+
+        # return values
+
+    def prompt_delete_task(self):
+        # This method should just be prompting the user. And then return the user's inputs
+        # it doesnt need to call the model, thats the Controllers job.
         name = input("Enter the name of the task to delete: ")
-        task = self.model.task_exists_by_name(name)
-        if task:
-            try:
-                self.model.delete_task(task)
-                print("\nTask deleted successfully!")
-            except ValueError as e:
-                print(f"Error deleting task: {e}")
-        else:
-            print("Task not found!")
+        # task = self.model.task_exists_by_name(name)
+        # if task:
+        #     try:
+        #         self.model.delete_task(task)
+        #         print("\nTask deleted successfully!")
+        #     except ValueError as e:
+        #         print(f"Error deleting task: {e}")
+        # else:
+        #     print("Task not found!")
 
     def prompt_task_details(self):
         name = input("Enter task name: ")
