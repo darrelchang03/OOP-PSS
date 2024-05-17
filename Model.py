@@ -27,14 +27,14 @@ class Model():
     def add_task(self, task):
         #checks if the existing task is a recurring task 
         for existing_task in self.tasks:
-            if (isinstance(task, RecurringTask)):
+            if (isinstance(existing_task, RecurringTask)):
 
                 #checks the occurences and sees if the tasks overlap
                 for occurence in existing_task.occurences(datetime.today(), existing_task.endDatetime):
 
                     #if tasks the anti_tasks overlap with the tasks, we can add tasks
                     if self.__tasks_overlap(existing_task, task):
-
+                        
                         for task in self.tasks:
                             if self.__tasks_completely_overlap(task, existing_task) and isinstance(task, AntiTask):
                                 self.tasks.append(task)

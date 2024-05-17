@@ -20,7 +20,7 @@ class Task():
         self.name = name
         self.type = type
         self.startDatetime = self.__create_datetime(date, startTime)
-        self.duration = self.__create_datetime(duration)
+        self.duration = self.__create_timedelta(duration)
         self.endDatetime = self.startDatetime + self.duration
     
     def __create_datetime(self, date, time):
@@ -28,14 +28,14 @@ class Task():
         month = int(date / 100 % 100)
         day = int(date % 100)
         hours = int(time)
-        minutes = (int(time - hours) * 60)
+        minutes = int((time - hours) * 60)
         
         return datetime(year, month, day, hours, minutes)
     
     def __create_timedelta(self, duration):
         # eg. duration = 3.25           hours = duration // 1          minutes = (duration % hours) * 60
         hours = int(duration)
-        minutes = (int(duration-hours) * 60)
+        minutes = ((duration-hours) * 60)
         return timedelta(hours=hours, minutes=minutes)
 '''
 Parameters:
@@ -63,12 +63,12 @@ class RecurringTask(Task):
         self.frequency = timedelta(days=frequency)
 
         # Method that generates occurences that fall within start and end dates
-        def occurences(self, startDate, endDate):
-            current_datetime = self.startDatetime
-            while current_datetime.date() <= self.endDate:
-                if startDate <= current_datetime.date() <= endDate:
-                    yield current_datetime
-                current_datetime += self.frequency
+    def occurences(self, startDate, endDate):
+        current_datetime = self.startDatetime
+        while current_datetime.date() <= self.endDate:
+            if startDate <= current_datetime.date() <= endDate:
+                yield current_datetime
+            current_datetime += self.frequency
 
 
 '''
