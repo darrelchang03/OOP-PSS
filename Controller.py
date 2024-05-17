@@ -91,24 +91,29 @@ class Controller():
 
     def update_name(self):
         # call viewer to prompt for task
+        self.viewer.display_message()
         # get values returned and validate
+        name = input("Name: ")
         # Validate using model methods
+        if self.model.task_exists_by_name(self, name) == False:
         # If valid create Task and add it to the model
-        taskName = # viewer prompt method
         # call method to see if task exist
-        try:
-            self.model.update_task_name(taskName)
-            self.viewer.display_message(f"Task name {taskName} updated successfully")
-        except ValueError as e:
-           self.viewer.display_error(str(e))
+            self.model.update_task_name(name)
+            self.viewer.display_message(f"Task name {name} updated successfully")
+        else:
+           self.viewer.display_error("This is an invalid name due to the name already existing")
+        # should this validation exist?
+
 
 
     def show_tasks(self):
         # call viewer to prompt for days in advance to see schedule
         # get values returned and validate
+        days = self.viewer.prompt_view_schedule()
         # Call model for tasks
+        tasks = self.model.tasksForNextDays()
         # Call viewer to display the list of tasks
-        for task in self.scheduler.tasks:
+        for task in tasks:
             self.viewer.display_task(task)
 
     # Private methods
