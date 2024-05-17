@@ -22,19 +22,18 @@ class Task():
         self.start_time = startTime
         self.duration = duration
         self.date = date
-        self.startDateTime = self.__create_datetime(date, startTime)
-        self.end_datetime = self.startDateTime + self.__create_timedelta(duration)
+        self.startDateTime = self.create_datetime(date, startTime)
+        self.end_datetime = self.startDateTime + self.create_timedelta(duration)
 
     '''
-    def __init__(self, name, type, startTime, duration, date):
         self.name = name
         self.type = type
-        self.startDatetime = self.__create_datetime(date, startTime)
-        self.duration = self.__create_timedelta(duration)
+        self.startDatetime = self.create_datetime(date, startTime)
+        self.duration = self.create_timedelta(duration)
         self.endDatetime = self.startDatetime + self.duration
     '''
     
-    def __create_datetime(self, date, time):
+    def create_datetime(self, date, time):
         year = int(date / 10000)
         month = int(date / 100 % 100)
         day = int(date % 100)
@@ -43,7 +42,7 @@ class Task():
         
         return datetime(year, month, day, hours, minutes)
     
-    def __create_timedelta(self, duration):
+    def create_timedelta(self, duration):
         # eg. duration = 3.25           hours = duration // 1          minutes = (duration % hours) * 60
         hours = int(duration)
         minutes = ((duration-hours) * 60)
@@ -69,7 +68,7 @@ class RecurringTask(Task):
     def __init__(self, name, type, startTime, duration, date, endDate, frequency):
         super().__init__(name, type, startTime, duration, date)
         self.endDate = endDate
-        # self.endDatetime = self.__create_datetime(endDate, duration)
+        # self.endDatetime = self.create_datetime(endDate, duration)
 
         # Frequency represented by a timedelta object
         self.frequency = timedelta(days=frequency)

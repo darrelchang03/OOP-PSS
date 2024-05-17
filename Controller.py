@@ -105,7 +105,6 @@ class Controller():
         # should this validation exist?
 
 
-
     def show_tasks(self):
         # call viewer to prompt for days in advance to see schedule
         # get values returned and validate

@@ -34,7 +34,7 @@ class Model():
 
                     #if tasks the anti_tasks overlap with the tasks, we can add tasks
                     if self.__tasks_overlap(existing_task, task):
-                        
+
                         for task in self.tasks:
                             if self.__tasks_completely_overlap(task, existing_task) and isinstance(task, AntiTask):
                                 self.tasks.append(task)
@@ -114,7 +114,7 @@ class Model():
                         occurenceName = 'Occurance of ' + task.name
                         singleOccurence = Task(occurenceName, task.type, )
                         res.append(singleOccurence)
-            elif (today <= task.startDatetime.today() <= endDate):
+            elif (today <= task.startDateTime.today() <= endDate):
                 res.append(task)
         return res
 
@@ -171,13 +171,13 @@ class Model():
         return datetime(year, month, day, hours, minutes)
     
     def __tasks_completely_overlap(self, task1, task2):
-        return (task1.startDatetime == task2.startDatetime and task2.duration == task2.duration)
+        return (task1.startDateTime == task2.startDateTime and task2.duration == task2.duration)
 
     def __tasks_overlap(self, task1, task2):
-        start1 = task1.startDatetime
-        end1 = start1 + task1.duration
+        start1 = task1.startDateTime
+        end1 = start1 + task1.create_timedelta(task1.duration)
 
-        start2 = task2.startDatetime
-        end2 = start2 + task2.duration
+        start2 = task2.startDateTime
+        end2 = start2 + task2.create_timedelta(task2.duration)
 
         return max(start1, start2) < min(end1, end2)
