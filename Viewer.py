@@ -111,6 +111,7 @@ class Viewer():
         days = input("How many days in advance would you like to view your schedule")
         return days
 
+# This should just return the inputs given by the user
     def menu(self):
         while True:
             print("\n------- Task Menu -------")

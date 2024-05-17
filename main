@@ -4,11 +4,9 @@ from Task import Task
 from Viewer import Viewer
 
 def main():
-    # controller = Controller()
-    # controller.viewer.menu
     model = Model()
-    viewer = Viewer(model)
-    viewer.menu()
+    Task
+    model
 
 if __name__ == "__main__":
     main()

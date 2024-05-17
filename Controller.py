@@ -11,6 +11,7 @@ class Controller():
 
     # Contructor
 
+# Needs to call viewer menu method, take in the inputs and call methods accordingly
     def __init__(self):
         self.model = Model
         self.viewer = Viewer
