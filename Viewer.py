@@ -79,10 +79,14 @@ class Viewer():
         # except ValueError as e:
         #     print(f"Error adding task: {e}")
         print("Creating new task")
+     
         self.prompt_task_details()
 
 
         # return values
+        return name, type, time, duration, date
+    
+	
 
     def prompt_delete_task(self):
         # This method should just be prompting the user. And then return the user's inputs
@@ -113,24 +117,25 @@ class Viewer():
 
 # This should just return the inputs given by the user
     def menu(self):
-        while True:
-            print("\n------- Task Menu -------")
+#        while True:
+#            print("\n------- Task Menu -------")
             print("1. Display Tasks")
             print("2. Add Task")
             print("3. Delete Task")
             print("4. Exit")
-            choice = input("Enter a number: ")
-            if choice == '1':
-                self.display_tasks()
-            elif choice == '2':
-                self.add_task()
-            elif choice == '3':
-                self.delete_task()
-            elif choice == '4':
-                print("Exiting Task Manager.")
-                break
-            else:
-                print("Invalid choice. Please try again.")
+            choice = input("Choose choice: ")
+            return choice
+#            choice = input("Enter a number: ")
+#            if choice == '1':
+#                self.display_tasks()
+#            elif choice == '2':
+#                self.add_task()
+#            elif choice == '3':
+#                self.delete_task()
+#           elif choice == '4':
+###           else:
+ # #             print("Invalid choice. Please try again.")
+    
 
 
     if __name__ == "__main__":
